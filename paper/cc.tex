@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+% typesetting issues
+\setlength{\textwidth}{5.5in}
+\setlength{\textheight}{9.5in}
+\setlength{\oddsidemargin}{0.5\paperwidth}
+\addtolength{\oddsidemargin}{-1.0in} % latex oddity
+\addtolength{\oddsidemargin}{-0.5\textwidth}
+\setlength{\topmargin}{0.5\paperheight}
+\addtolength{\topmargin}{-1.0in} % latex oddity
+\addtolength{\topmargin}{-0.5\headheight}
+\addtolength{\topmargin}{-0.5\headsep}
+\addtolength{\topmargin}{-0.5\textheight}
+\frenchspacing\raggedbottom\sloppy\sloppypar
+\pagestyle{myheadings}
+\markright{Hogg / Is causation just causality?}
+
+\title{\bfseries%
+  Is causation just causality?}
+\author{%
+  David W. Hogg and others}
+\date{2022 June}
+
+\begin{document}
+
+\maketitle\thispagestyle{empty}
+
+\paragraph{Abstract:}
+Causal inference is a core activity in statistics:
+Does drug $A$ cure disease $B$?
+Often causation is defined in terms of counterfactual choices that might be made.
+These counterfactuals often involve free will; they are not na\"ively comprehensible in the context of the unitarity (the determinism and reversibility) of the laws of physics.
+At the same time, the unitary laws of physics have a very well-defined concept of causality, in which everything about a key event can be predicted from properties of events in the past light cone of that key event, and nothing outside that.
+The past light cone of the key event is the set of all events that are prior to the key event in time, for all observers in all possible reference frames.
+Here we use this physical idea of causality, plus some ideas about finite physical systems, to try to reformulate the statistical concept of causation in terms that are physics-safe.
+That this must be possible is indicated by the fact that physicists frequently use causal language to describe the interactions and trajectories of physical systems!
+One side note is that the time ordering of events is already a strong component of causal inference in statistics, but often its role is implicit.
+Another side note is that, since there is an alternative formulation of the unitary laws of physics in which everything about an event can be predicted from properties of events in the \emph{future} light cone (recall reversibility), there will be an alternate view of causal inference in physics that is extremely odd.
+
+\section{Introduction}
+
+Physicists love causal language:
+The particle hit this location in the detector because it scattered into a particular momentum state.
+The galaxy stopped forming stars because it fell into a galaxy cluster, which heated up its interstellar gas.
+The coffee cup broke because it was released from rest a certain height above a stone floor.
+
+At the same time, physicists love unitarity:
+The evolution of the Universe deterministically proceeds from initial conditions set at (or maybe before!) the Big Bang, and it proceeds according to time-reversible laws.
+(No, quantum mechanics doesn't change this story, or not in relevant ways. And technically it isn't precisely time-reversible, it is CPT-reversible, but this is also irrelevant for now.)
+This point (unitarity) isn't perfectly established, I should say; it could be wrong.
+But unitarity is a core component of quantum electrodynamics and general relativity, both of which are tested at the many-digits-of-accuracy level in beautiful experiments.
+
+If unitarity holds, then we live in a deterministic universe.
+In this universe, it is no longer really the case that the coffee cup broke because it was released from rest a certain height above a stone floor.
+The coffee cup broke because of some extremely detailed properties of the initial conditions of the universe, set up (at least) 13.7 billion years ago.
+Those initial conditions were a \emph{common cause} of the release of the cup and also of its breakage.
+And also of the cup's design, manufacture, transportation, purchase, and filling with coffee.
+A physicist can annoy their friends by answering questions like ``why are you late?'' with ``the cause was the initial conditions of the universe, plus unitary evolution''.
+
+The goal of this paper is to save causation---causal explanations---for physicists; but it is also to render more physics-friendly the formulation of causal inference used in statistics.
+I think we can all get along in the end.
+
+Consider the following parable.
+Imagine that a new drug $A$ has been designed to cure headache.
+Experimenters use a very careful protocol to perform a randomized experiment in which half of the patients are given drug $A$, half are given a placebo, and neither the patients nor the experimenters know which patient gets which pill until long after the experiment is over.
+The setup is the following (and details matter here!):
+Each patient in the study is in an environment in which, as soon as they report feeling a headache, the time is recorded, and they are immediately provided with a pill (either drug $A$ or placebo, they don't know which).
+Then, after 2 hours wait---that is, 2 hours after the recorded time---they report back whether they do or do not still have symptoms of headache.
+In this trial, the drug proves to be reasonably effective ($p<0.05$) at curing headaches.
+The drug $A$ is approved and moves to commercialization.
+I don't think anyone would object that this is a good causal inference; we might even be interested in investing in this company.
+
+Now imagine that the experimenters who designed this experiment are very very devious.
+There is one more detail that I didn't mention.
+Although, in the protocol, the patients were \emph{handed} the pill immediately on reporting the feeling of headache, they were asked not to \emph{take} the pill for \emph{four hours}.
+That is, the protocol was actually:
+\begin{itemize}
+\item Patient reports headache, records time, obtains pill.
+\item At two hours after the recorded time, the patient reports whether or not they still have symptoms of headache.
+\item At four hours after the recorded time, the patient takes the pill.
+\end{itemize}
+The patients thought this protocol was extremely odd, but they were obedient and they did what they were told!
+
+Now what do you conclude about this pill?
+Is it effective or not?
+I don't think anyone would accept that this pill is demonstrated to be effective by this experimental protocol!
+We would conclude that the $p$-value was a fluke; just bad luck.
+But notice that the only difference between the first description of the experiment and the second is details about the \emph{time ordering of the events}.
+
+What do we learn from this parable?
+I think what we learn is that the concept of time ordering is essential to causal arguments.
+Thus the past light cone is already a part of the statistical concept of causal inference!
+Let's make this very much more specific.
+
+\section{What is a finite system?}
+
+We can define a physical system to be a closed (fairly smooth) surface $\mathcal S$ in space.
+This closed surface contains a small interior 3-volume $\mathcal V$ and excludes an enormous exterior 3-volume.
+In detail, this surface $\mathcal S$ moves with time; it has a time dependence.
+It has to, because there is no covariant description of being ``at rest'':
+There is no absolute rest frame.
+Because the surface is moving, and because everything in the Universe is moving at some level,
+there will be flows of material (particles, objects) and energy and momentum and other conserved quantities into and out of this surface $\mathcal S$.
+
+We are going to call the interior of the surface $\mathcal S$ the \emph{system}.
+The system is changing constantly with time as matter, energy, momentum, and so on flow in and out in different forms.
+Because the surface contains a finite 3-volume $\mathcal V$, there is a finite amount of mass and energy inside the system at any time, and a finite number of degrees of freedom.
+Because $\mathcal S$ is fairly smooth, there are finite rates (per unit time) of matter and energy flow into and out of the system.
+That is, the universe might be huge, but the system is finite in both contents and fluxes.
+
+For a concrete example, if you make the surface $\mathcal S$ something close to the surface of your entire body, then the system contains you, and also all your organs, and also all their cells, and also all their molecules and atoms.
+Over time, as sweat evaporates or you shed skin cells, matter and energy leave the system.
+Over time, as you eat and drink and soak up the sun's rays, matter and energy enter the system.
+
+Getting a tiny bit more technical, as the system $\mathcal S$ moves through $3+1$-dimensional spacetime, it traces out what might be called a \emph{world tube} of events, which are all the events that ever have happened or ever will happen inside the surface.
+That is, at any time, the system contains a well-defined 3-volume $\mathcal V$ of space such that any event $x$, which has a position in space and a time at which it occurs, is either inside or outside the system.
+The world tube is the collection of all spacetime events that are inside the system at the time at which they occur.
+
+We're going to consider a key event $x$ inside the world tube of the system $\mathcal S$.
+That is, we are talking about an event that takes place at a location and time such that it is inside the surface $\mathcal S$ when it happens.
+We're going to try to formulate causal inference as answering questions about the intersection between the past light cone of the key event $x$ and the world tube of the system.
+
+For a concrete example, the system might be your entire body, the key event $x$ might be the cessation of headache symptoms, and the relevant events in the past light cone might involve your body digesting a pill.
+
+\end{document}
